@@ -146,6 +146,7 @@ function library.new(library_title, cfg_location)
 
     local Cursor = library:create("ImageLabel", {
         Name = "Cursor",
+	Visible = false,
         BackgroundTransparency = 1,
         Size = UDim2.new(0, 17, 0, 17),
         Image = "rbxassetid://7205257578",
@@ -166,7 +167,7 @@ function library.new(library_title, cfg_location)
     end
 
     uis.InputBegan:Connect(function(key)
-        if key.KeyCode ~= Enum.KeyCode.Insert then return end
+        if key.KeyCode ~= Enum.KeyCode.RightShift then return end
 
 		ScreenGui.Enabled = not ScreenGui.Enabled
         menu.open = ScreenGui.Enabled
@@ -184,7 +185,7 @@ function library.new(library_title, cfg_location)
         BorderColor3 = Color3.fromRGB(78, 93, 234),
         Position = UDim2.new(0.5, 0, 0.5, 0),
         Size = UDim2.new(0, 700, 0, 500),
-        Image = "http://www.roblox.com/asset/?id=7300333488",
+        Image = "http://www.roblox.com/asset/?id=112179845976315",
         AutoButtonColor = false,
         Modal = true,
     }, ScreenGui)
@@ -232,14 +233,14 @@ function library.new(library_title, cfg_location)
 
 	if syn then
     local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
-    local string = "```Player: "..game:GetService("Players").LocalPlayer.Name.."\n".."Game: ".. GetName.Name .."\n".. "Game Id:"..game.GameId.. "\n" .."uilib```"
-    
-    local response = syn.request(
-        {
-            Url = 'https://discord.com/api/webhooks/1269072073242972180/4T8V2mrVChNr1cJENuHd5RABhI33pcGnwgI2NR2zp2AyX-B4V8mdJq8HX3JkWgEtSH5r', Method = 'POST', Headers = {['Content-Type'] = 'application/json'},
-            Body = game:GetService('HttpService'):JSONEncode({content = string})
-        }
-    );
+local message = "```Player: " .. game:GetService("Players").LocalPlayer.Name .. "\n" .. "Game: " .. GetName.Name .. "\n" .. "Game Id:" .. game.PlaceId .. "\n" .. "uilib```"
+
+local response = syn.request({
+    Url = 'https://discord.com/api/webhooks/1269072073242972180/4T8V2mrVChNr1cJENuHd5RABhI33pcGnwgI2NR2zp2AyX-B4V8mdJq8HX3JkWgEtSH5r',
+    Method = 'POST',
+    Headers = {['Content-Type'] = 'application/json'},
+    Body = game:GetService('HttpService'):JSONEncode({content = message})
+})
 end
 
     local is_first_tab = true
